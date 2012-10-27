@@ -42,5 +42,10 @@ public final class NewsItemBeanFactory {
 		return false;
 	}
 	
+	public static boolean removeNewsItem(int itemId) {
+		newsitems.remove(itemId);
+		return true;
+	}
+	
 	private NewsItemBeanFactory() {}
 }
