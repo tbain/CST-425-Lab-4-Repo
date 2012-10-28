@@ -21,7 +21,7 @@ for (NewsItemBean item : newsItems) {
 <%
 	if (rBean != null && rBean.getReporterId().equals(item.getReporterId())) {
 %>
-		<small><a href='<%= response.encodeURL("remove.jsp") %>'>remove</a> 
+		<small><a href='<%= response.encodeURL("remove.jsp?item="+item.getItemId()+"&title="+item.getItemTitle()) %>'>remove</a> 
 		<a href='<%= response.encodeURL("addnews.jsp?item="+item.getItemId()+"&title="+item.getItemTitle()+"&story="+item.getItemStory()) %>'>edit</a></small>
 <%
 	}

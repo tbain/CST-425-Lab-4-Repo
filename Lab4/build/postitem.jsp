@@ -8,6 +8,10 @@ import="edu.asupoly.cst425.lab4.*" %>
   ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");
   String msg = "";
   int id = 0;
+  if(rBean == null) {
+	  response.sendRedirect("login.html");
+	  return;
+  }
   
   if (title != null && title.length() > 0 && story != null && story.length() > 0) { 
 	  if (itemId != null && itemId.length() > 0) {
