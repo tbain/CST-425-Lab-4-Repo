@@ -1,5 +1,5 @@
 <%@ page session = "true"
-import="edu.asupoly.cst425.lab4.ReporterBean"
+import="edu.asupoly.cst425.lab4.model.ReporterBean"
 %>
 
 <%! ReporterBean rBean = null; %>
@@ -30,7 +30,7 @@ if (rBean != null) {
 <%
 } else {
 %>
-	<a href='<%= response.encodeURL("login.html") %>'>Login</a>
+	<a href='<%= response.encodeURL("login.jsp") %>'>Login</a>
 <%
 }
 %>

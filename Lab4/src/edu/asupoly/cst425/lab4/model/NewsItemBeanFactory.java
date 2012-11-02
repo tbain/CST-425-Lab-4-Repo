@@ -1,7 +1,7 @@
 /**
  * NewsItemBeanFactory.java
  */
-package edu.asupoly.cst425.lab4;
+package edu.asupoly.cst425.lab4.model;
 
 import java.util.Collection;
 import java.util.HashMap;

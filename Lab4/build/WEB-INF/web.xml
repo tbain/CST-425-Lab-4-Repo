@@ -2,9 +2,19 @@
 
 <!DOCTYPE web-app
     PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-    "http://java.sun.com/dtd/web-app_2_3.dtd">
+    "http://java.sun.com/dtd/web-app_2_3.dtd">   
 
 <web-app>
+     <servlet>
+        <servlet-name>ControllerServlet</servlet-name>
+        <servlet-class>edu.asupoly.cst425.lab4.controller.ControllerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ControllerServlet</servlet-name>
+        <url-pattern>/controller/*</url-pattern>
+    </servlet-mapping>
+    
 	 <servlet>
 		<jsp-file>/index.jsp</jsp-file>        
 	</servlet>

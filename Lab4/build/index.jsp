@@ -1,6 +1,6 @@
 <jsp:include page="header.jsp"/>
 <%@ page session = "true"
-import="edu.asupoly.cst425.lab4.*, java.util.*" %>
+import="edu.asupoly.cst425.lab4.model.*, java.util.*" %>
 
 <%
 ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");

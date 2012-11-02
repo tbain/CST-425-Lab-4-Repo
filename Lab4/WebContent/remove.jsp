@@ -1,5 +1,5 @@
 <%@ page session = "true" 
-import="edu.asupoly.cst425.lab4.*" %>
+import="edu.asupoly.cst425.lab4.model.*" %>
 
 <%
   String itemId = request.getParameter("item");

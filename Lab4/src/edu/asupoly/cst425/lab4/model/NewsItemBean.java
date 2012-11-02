@@ -1,4 +1,4 @@
-package edu.asupoly.cst425.lab4;
+package edu.asupoly.cst425.lab4.model;
 
 import java.util.Date;
 

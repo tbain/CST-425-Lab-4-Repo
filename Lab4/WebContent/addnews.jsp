@@ -1,6 +1,6 @@
 <jsp:include page="header.jsp"/>
 <%@ page session = "true" 
-import="edu.asupoly.cst425.lab4.*" %>
+import="edu.asupoly.cst425.lab4.model.*" %>
 
 <%
   String title = request.getParameter("title");
@@ -15,7 +15,7 @@ import="edu.asupoly.cst425.lab4.*" %>
 
 <h3>Add News</h3>
 <p>Fill in all fields to add your news to NEW news.</p>
-<form action="postitem.jsp" method="post">
+<form action="<%= request.getContextPath() %>/controller?action=addNews" method="post">
  Title: <input type="text" size="50" name="title" value="<%= title %>" /><br/>
  Story: <textarea cols="50" rows="15" name="story" /><%= story %></textarea>
  <br/>
