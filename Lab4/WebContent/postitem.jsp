@@ -9,16 +9,19 @@ import="edu.asupoly.cst425.lab4.*" %>
   String msg = "";
   int id = 0;
   
-  if (title != null && title.length() > 0 && story != null && story.length() > 0) { 
+  if (title != null && title.length() > 0 && story != null && story.length() > 0 && rBean != null) 
+  { 
 	  if (itemId != null && itemId.length() > 0) {
 		  try {
 			  id = Integer.parseInt(itemId);
 		  } catch (Exception exc) {
 				msg = "Invalid format for news item ID";		
-		  }
+		  }		
+		  
 		  if (msg.equals("") && NewsItemBeanFactory.editNewsItem(id, title, story, rBean.getReporterId())) {
 			  msg = "News item " + id + " successfully edited!";
-		  } else {
+		  } 
+		  else {
 			  msg = "News item " + id + " could not be edited!";
 		  }
 	  } else {
@@ -26,7 +29,11 @@ import="edu.asupoly.cst425.lab4.*" %>
 		  msg = "News item successfully added!";
 	  }
   }
+  else
+  {
+	  msg = "Your session has expired, please login again!";
+  }
 
   session.setAttribute("msg", msg);
-  response.sendRedirect("index.jsp");
+  response.sendRedirect(response.encodeURL("index.jsp"));
 %>
