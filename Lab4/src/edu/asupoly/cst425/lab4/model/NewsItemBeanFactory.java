@@ -34,7 +34,8 @@ public final class NewsItemBeanFactory {
 	
 	public static boolean editNewsItem(int itemId, String title, String story, String reporterId) {
 		NewsItemBean newsItem = getNewsItem(itemId, reporterId);
-		if (newsItem != null) {
+		if (newsItem != null)
+		{
 			newsItem.setItemTitle(title, reporterId);
 			newsItem.setItemStory(story, reporterId);
 			return true;
@@ -43,8 +44,16 @@ public final class NewsItemBeanFactory {
 	}
 	
 	public static boolean removeNewsItem(int itemId) {
-		newsitems.remove(itemId);
-		return true;
+		NewsItemBean result = newsitems.remove(itemId);
+		
+		if (result == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}		
 	}
 	
 	private NewsItemBeanFactory() {}

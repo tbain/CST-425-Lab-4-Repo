@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Error accessing NEW News</title>
 </head>
 <body>
-  An error occurred while processing your request: perhaps you entered
-  the incorrect password. Try <a href="login.html">again</a>?
+ <p> An error occurred while processing your request: your session may have timed out. Try <a href="login.html"> logging in again</a>.</p> 
+ <p>Thank you for your patience. </p>
 </body>
 </html>

@@ -2,10 +2,10 @@
 import="edu.asupoly.cst425.lab4.model.*" %>
 
 <%
-  String itemId = request.getParameter("item");
-  String title = request.getParameter("title");
-  String msg = "";
-  int id = 0;
+/*   String itemId = request.getParameter("item");
+  String title = request.getParameter("title"); */
+ // String msg = "";
+/*   int id = 0;
   
   if (title != null && title.length() > 0) { 
 	  if (itemId != null && itemId.length() > 0) {
@@ -20,8 +20,11 @@ import="edu.asupoly.cst425.lab4.model.*" %>
 			  msg = "News item \"" + title + "\" could not be removed!";
 		  }
 	  }
-  }
+  } */
 
-  session.setAttribute("msg", msg);
-  response.sendRedirect("index.jsp");
+ // session.setAttribute("msg", msg); 
+  
+  
+ 
+  response.sendRedirect(request.getContextPath() +"/controller?action=remove");
 %>

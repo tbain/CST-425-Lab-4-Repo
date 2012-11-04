@@ -3,10 +3,11 @@
 import="edu.asupoly.cst425.lab4.model.*" %>
 
 <%
+  ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");	
   String title = request.getParameter("title");
   String story = request.getParameter("story");
   String itemId = request.getParameter("item");
-  ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");
+ 
   
   if (title == null) { title = ""; }
   if (story == null) { story = ""; }	
@@ -15,7 +16,7 @@ import="edu.asupoly.cst425.lab4.model.*" %>
 
 <h3>Add News</h3>
 <p>Fill in all fields to add your news to NEW news.</p>
-<form action="<%= request.getContextPath() %>/controller?action=addNews" method="post">
+<form action="<%= response.encodeURL(request.getContextPath() +"/controller?action=addNews") %>" method="post">
  Title: <input type="text" size="50" name="title" value="<%= title %>" /><br/>
  Story: <textarea cols="50" rows="15" name="story" /><%= story %></textarea>
  <br/>

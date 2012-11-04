@@ -10,34 +10,49 @@ import edu.asupoly.cst425.lab4.model.ReporterBean;
 public class AddNewsHandler implements ActionHandler {
 
 	@Override
-	public String handleAction(Map<String, String[]> params, HttpSession session) {
-		  String title = HandlerUtilities.getParameterValue("title", params);
-		  String story = HandlerUtilities.getParameterValue("story", params);
-		  String itemId = HandlerUtilities.getParameterValue("item", params);
-		  ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");
-		  String msg = "";
-		  int id = 0;
+	public String handleAction(Map<String, String[]> params, HttpSession session) 
+	{
+		 ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");
 		  
-		  if (title != null && title.length() > 0 && story != null && story.length() > 0) { 
-			  if (itemId != null && itemId.length() > 0) {
-				  try {
-					  id = Integer.parseInt(itemId);
-				  } catch (Exception exc) {
-						msg = "Invalid format for news item ID";		
-				  }
-				  if (msg.equals("") && NewsItemBeanFactory.editNewsItem(id, title, story, rBean.getReporterId())) {
-					  msg = "News item " + id + " successfully edited!";
-				  } else {
-					  msg = "News item " + id + " could not be edited!";
-				  }
-			  } else {
-				  NewsItemBeanFactory.addNewsItem(title, story, rBean.getReporterId());
-				  msg = "News item successfully added!";
-			  }
-		  }
-
-		  session.setAttribute("msg", msg);
-		  return "index";
+		 if (params != null && rBean != null)
+		 { 
+			  String title = HandlerUtilities.getParameterValue("title", params);
+			  String story = HandlerUtilities.getParameterValue("story", params);
+			  String itemId = HandlerUtilities.getParameterValue("item", params);			
+			  String msg = "";
+			  int id = 0;
+			  
+			  if (title != null && title.length() > 0 && story != null && story.length() > 0) 
+			  { 
+				  if (itemId != null && itemId.length() > 0) 
+				  {
+					  try 
+					  {
+						  id = Integer.parseInt(itemId);
+					  } catch (Exception exc) {
+							msg = "Invalid format for news item ID";		
+					  }
+					  
+					  if (msg.equals("") && NewsItemBeanFactory.editNewsItem(id, title, story, rBean.getReporterId())) 
+					  {
+						  msg = "News item " + id + " successfully edited!";
+					  } else 
+					  {
+						  msg = "News item " + id + " could not be edited!";
+					  }
+				  } else
+				  {
+					  NewsItemBeanFactory.addNewsItem(title, story, rBean.getReporterId());
+					  msg = "News item successfully added!";
+				  }				 
+			  }		
+			  session.setAttribute("msg", msg);
+			  return "index";
+		 }
+		 else
+		 {					
+			 return null;
+		 }
 	}
 
 }
