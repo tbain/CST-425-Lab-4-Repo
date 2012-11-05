@@ -19,9 +19,9 @@ for (NewsItemBean item : newsItems) {
     <hr>
     <h3><%= item.getItemTitle() %></h3>
 <%
-	if (rBean != null && rBean.getReporterId().equals(item.getReporterId())) {
+	if (rBean != null && rBean.getReporterId().equals(item.getReporterId()))	{
 %>
-		<small><a href='<%= response.encodeURL("remove.jsp?item="+item.getItemId()+"&title="+item.getItemTitle()) %>'>remove</a> 
+		<small><a href='<%=response.encodeURL(request.getContextPath() +"/controller") +"?action=remove&item="+item.getItemId()+"&title="+item.getItemTitle() %>'>remove</a> 
 		<a href='<%= response.encodeURL("addnews.jsp?item="+item.getItemId()+"&title="+item.getItemTitle()+"&story="+item.getItemStory()) %>'>edit</a></small>
 <%
 	}

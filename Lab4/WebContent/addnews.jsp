@@ -3,16 +3,12 @@
 import="edu.asupoly.cst425.lab4.model.*" %>
 
 <%
-  ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");	
   String title = request.getParameter("title");
   String story = request.getParameter("story");
-  String itemId = request.getParameter("item");
- 
-  
+  String itemId = request.getParameter("item");  
   if (title == null) { title = ""; }
   if (story == null) { story = ""; }	
 %>
-
 
 <h3>Add News</h3>
 <p>Fill in all fields to add your news to NEW news.</p>

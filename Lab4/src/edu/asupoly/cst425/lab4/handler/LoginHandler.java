@@ -1,14 +1,12 @@
 package edu.asupoly.cst425.lab4.handler;
 
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import edu.asupoly.cst425.lab4.model.ReporterBean;
 import edu.asupoly.cst425.lab4.model.ReporterBeanFactory;
 
-public class LoginHandler implements ActionHandler{
-
+public class LoginHandler implements ActionHandler
+{
 	@Override
 	public String handleAction(Map<String, String[]> params, HttpSession session) 
 	{				
@@ -37,6 +35,4 @@ public class LoginHandler implements ActionHandler{
 		
 		return "index";
 	}
-
-
 }

@@ -15,23 +15,22 @@ import javax.servlet.http.HttpSession;
 import edu.asupoly.cst425.lab4.handler.ActionHandler;
 import edu.asupoly.cst425.lab4.handler.AddNewsHandler;
 import edu.asupoly.cst425.lab4.handler.LoginHandler;
+import edu.asupoly.cst425.lab4.handler.LogoutHandler;
 import edu.asupoly.cst425.lab4.handler.RemoveHandler;
 
-public class ControllerServlet extends HttpServlet {
-	/**
-     * 
-     */
+public class ControllerServlet extends HttpServlet 
+{
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(
             "edu.asupoly.cst425.t6mvc2.controller.ControllerServlet");
-    private static String errorPage = "error.jsp";
-    private static String successPage = "success.jsp";
+    private static String errorPage = "error.jsp";   
     private static Map<String, ActionHandler> handlers = new HashMap<String, ActionHandler>();
     private static Map<String, String> pageViews = new HashMap<String, String>();
     
     public void init(ServletConfig config) {
     	// normally I might read the action mapping from a config file
     	handlers.put("login", new LoginHandler());
+    	handlers.put("logout", new LogoutHandler());
     	handlers.put("addNews", new AddNewsHandler());
     	handlers.put("remove", new RemoveHandler());
     	pageViews.put("index", "/index.jsp");
@@ -51,12 +50,12 @@ public class ControllerServlet extends HttpServlet {
     		action = "login";
     	}    	
     	if (action!= null && action.length() > 0) 
-    	{
+    	{	
     		// Forward to web application to page indicated by action
     		ActionHandler handler = handlers.get(action);
     		
     		if (handler != null) 
-    		{
+    		{    			
     			result = handler.handleAction(params, session);
     			
     			if (result != null && result.length() > 0)

@@ -26,7 +26,7 @@ if (rBean != null) {
 if (rBean != null) {
 %>
  <a href='<%= response.encodeURL("addnews.jsp") %>'>Add News</a> 
- <a href='<%= response.encodeURL("logout.jsp") %>'>Logout</a>
+ <a href='<%=response.encodeURL(request.getContextPath() +"/controller") +"?action=logout" %>'>Logout</a> 
 <%
 } else {
 %>
