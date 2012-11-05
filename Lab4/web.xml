@@ -8,14 +8,15 @@
      <servlet>
         <servlet-name>ControllerServlet</servlet-name>
         <servlet-class>edu.asupoly.cst425.lab4.controller.ControllerServlet</servlet-class>
+        <init-param>
+    		<param-name>databaseURL</param-name>
+    		<param-value>jdbc:mysql://localhost:3306/cst425lab4</param-value>
+  		</init-param>
+  		<load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>
         <url-pattern>/controller/*</url-pattern>
     </servlet-mapping>
-    
-	 <servlet>
-		<jsp-file>/index.jsp</jsp-file>        
-	</servlet>
 </web-app>

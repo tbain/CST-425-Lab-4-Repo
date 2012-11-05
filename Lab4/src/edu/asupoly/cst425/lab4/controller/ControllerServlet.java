@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.asupoly.cst425.lab4.dao.Lab4DAO;
 import edu.asupoly.cst425.lab4.handler.ActionHandler;
 import edu.asupoly.cst425.lab4.handler.AddNewsHandler;
 import edu.asupoly.cst425.lab4.handler.LoginHandler;
 import edu.asupoly.cst425.lab4.handler.LogoutHandler;
 import edu.asupoly.cst425.lab4.handler.RemoveHandler;
+import edu.asupoly.cst425.lab4.model.NewsItemBeanFactory;
 
 public class ControllerServlet extends HttpServlet 
 {
@@ -26,18 +28,33 @@ public class ControllerServlet extends HttpServlet
     private static String errorPage = "error.jsp";   
     private static Map<String, ActionHandler> handlers = new HashMap<String, ActionHandler>();
     private static Map<String, String> pageViews = new HashMap<String, String>();
+    public static final String INITPARAM_DB_URL = "databaseURL";
+    private Lab4DAO dao;
+    public static final String DAO = "dao";
+    public static final String NEWS_ITEM_FACTORY = "news_item_factory";
     
     public void init(ServletConfig config) {
     	// normally I might read the action mapping from a config file
+    	try {
+			super.init(config);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	handlers.put("login", new LoginHandler());
     	handlers.put("logout", new LogoutHandler());
     	handlers.put("addNews", new AddNewsHandler());
     	handlers.put("remove", new RemoveHandler());
-    	pageViews.put("index", "/index.jsp");
+    	pageViews.put("index", "/index.jsp");   
+    	logger.info("in config");
+    	final String dbURL = config.getInitParameter(INITPARAM_DB_URL);    	
+    	Lab4DAO dao = new Lab4DAO(dbURL);
+    	config.getServletContext().setAttribute(ControllerServlet.NEWS_ITEM_FACTORY, new NewsItemBeanFactory(dao));
+    	config.getServletContext().setAttribute(ControllerServlet.INITPARAM_DB_URL, dbURL);
     }
     
     private void doAction(HttpServletRequest request, HttpServletResponse response)
-					throws ServletException, IOException {
+					throws ServletException, IOException {    	
     	
     	HttpSession session = request.getSession();    	
     	String forwardPage = errorPage;

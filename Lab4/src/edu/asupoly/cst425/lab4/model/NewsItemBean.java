@@ -3,7 +3,6 @@ package edu.asupoly.cst425.lab4.model;
 import java.util.Date;
 
 public class NewsItemBean {
-	private static int nextId = 1;
 	
 	private int itemId;
 	private String itemTitle;
@@ -16,7 +15,21 @@ public class NewsItemBean {
 		itemStory = story;
 		reporterId = rid;
 		itemDate = new Date();
-		itemId = nextId++;
+	}
+	
+	NewsItemBean(String title, String story, String rid, Date date) {
+		this.itemTitle = title;
+		this.itemStory = story;
+		this.reporterId = rid;
+		this.itemDate = date;
+	}
+	
+	public NewsItemBean(String title, String story, String rid, Date date, int itemId) {
+		this.itemTitle = title;
+		this.itemStory = story;
+		this.reporterId = rid;
+		this.itemDate = date;
+		this.itemId = itemId;
 	}
 	
 	public int getItemId() {
@@ -41,6 +54,10 @@ public class NewsItemBean {
 			this.itemStory = itemStory;
 			setItemDate(new Date());
 		}
+	}
+	
+	public void setItemStory(String itemStory) {
+		this.itemStory = itemStory;
 	}
 
 	public String getItemStory() {

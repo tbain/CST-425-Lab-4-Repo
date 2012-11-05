@@ -1,10 +1,11 @@
 <jsp:include page="header.jsp"/>
 <%@ page session = "true"
-import="edu.asupoly.cst425.lab4.model.*, java.util.*" %>
+import="edu.asupoly.cst425.lab4.model.*, java.util.*, edu.asupoly.cst425.lab4.controller.*" %>
 
 <%
 ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");
-Collection<NewsItemBean> newsItems = NewsItemBeanFactory.getAllItems();
+NewsItemBeanFactory factory = (NewsItemBeanFactory) session.getServletContext().getAttribute(ControllerServlet.NEWS_ITEM_FACTORY);
+List<NewsItemBean> newsItems = factory.getAllItems();
 String msg = (String)session.getAttribute("msg");
 
 if (msg != null && msg.length() > 0) {

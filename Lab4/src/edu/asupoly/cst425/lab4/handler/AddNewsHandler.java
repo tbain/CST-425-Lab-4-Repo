@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import edu.asupoly.cst425.lab4.controller.ControllerServlet;
 import edu.asupoly.cst425.lab4.model.NewsItemBeanFactory;
 import edu.asupoly.cst425.lab4.model.ReporterBean;
 
@@ -13,6 +14,7 @@ public class AddNewsHandler implements ActionHandler {
 	public String handleAction(Map<String, String[]> params, HttpSession session) 
 	{
 		 ReporterBean rBean = (ReporterBean)session.getAttribute("reporterBean");
+		 NewsItemBeanFactory factory = (NewsItemBeanFactory) session.getServletContext().getAttribute(ControllerServlet.NEWS_ITEM_FACTORY); 
 		  
 		 if (params != null && rBean != null)
 		 { 
@@ -20,7 +22,7 @@ public class AddNewsHandler implements ActionHandler {
 			  String story = HandlerUtilities.getParameterValue("story", params);
 			  String itemId = HandlerUtilities.getParameterValue("item", params);			
 			  String msg = "";
-			  int id = 0;
+			  int id = 0;	  
 			  
 			  if (title != null && title.length() > 0 && story != null && story.length() > 0) 
 			  { 
@@ -33,7 +35,7 @@ public class AddNewsHandler implements ActionHandler {
 							msg = "Invalid format for news item ID";		
 					  }
 					  
-					  if (msg.equals("") && NewsItemBeanFactory.editNewsItem(id, title, story, rBean.getReporterId())) 
+					  if (msg.equals("") && factory.editNewsItem(id, title, story, rBean.getReporterId())) 
 					  {
 						  msg = "News item " + id + " successfully edited!";
 					  } else 
@@ -42,7 +44,7 @@ public class AddNewsHandler implements ActionHandler {
 					  }
 				  } else
 				  {
-					  NewsItemBeanFactory.addNewsItem(title, story, rBean.getReporterId());
+					  factory.addNewsItem(title, story, rBean.getReporterId());
 					  msg = "News item successfully added!";
 				  }				 
 			  }		

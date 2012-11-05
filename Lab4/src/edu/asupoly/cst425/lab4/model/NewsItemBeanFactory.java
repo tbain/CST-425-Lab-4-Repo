@@ -5,7 +5,10 @@ package edu.asupoly.cst425.lab4.model;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import edu.asupoly.cst425.lab4.dao.Lab4DAO;
 
 /**
  * Factory class provides static accessor for getting reporters.
@@ -14,47 +17,31 @@ import java.util.Map;
  *
  */
 public final class NewsItemBeanFactory {
-	private static Map<Integer, NewsItemBean> newsitems = new HashMap<Integer, NewsItemBean>();
+	private Lab4DAO dao;
 	
-	public static NewsItemBean getNewsItem(int itemId, String rid) {
-		NewsItemBean rval = newsitems.get(new Integer(itemId));
-
-		return rval;
+	public NewsItemBeanFactory(Lab4DAO dao) {
+		this.dao = dao;
 	}
 	
-	public static Collection<NewsItemBean> getAllItems() {
-		return newsitems.values(); 
+	public NewsItemBean getNewsItem(int itemId, String rid) {
+		return dao.getNewsItemForId(itemId);
 	}
 	
-	public static boolean addNewsItem(String title, String story, String reporterId) {
+	public List<NewsItemBean> getAllItems() {
+		return dao.getAllNewsItems();
+	}
+	
+	public boolean addNewsItem(String title, String story, String reporterId) {
 		NewsItemBean newsItem = new NewsItemBean(title, story, reporterId);
-		newsitems.put(newsItem.getItemId(), newsItem);
-		return true;
+		return dao.insertNewsItem(newsItem);
 	}
 	
-	public static boolean editNewsItem(int itemId, String title, String story, String reporterId) {
+	public boolean editNewsItem(int itemId, String title, String story, String reporterId) {
 		NewsItemBean newsItem = getNewsItem(itemId, reporterId);
-		if (newsItem != null)
-		{
-			newsItem.setItemTitle(title, reporterId);
-			newsItem.setItemStory(story, reporterId);
-			return true;
-		}
-		return false;
+		return dao.updateNewsItem(newsItem);
 	}
 	
-	public static boolean removeNewsItem(int itemId) {
-		NewsItemBean result = newsitems.remove(itemId);
-		
-		if (result == null)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}		
-	}
-	
-	private NewsItemBeanFactory() {}
+	public boolean removeNewsItem(int itemId) {
+		return dao.removeNewsItem(itemId);		
+	}	
 }
