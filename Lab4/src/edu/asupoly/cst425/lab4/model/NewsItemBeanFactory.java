@@ -27,8 +27,16 @@ public final class NewsItemBeanFactory {
 		return dao.getNewsItemForId(itemId);
 	}
 	
+	public NewsItemBean getNewsItem(int itemId) {
+		return getNewsItem(itemId, null);
+	}
+	
 	public List<NewsItemBean> getAllItems() {
 		return dao.getAllNewsItems();
+	}
+	
+	public List<NewsItemBean> getFavoriteNewsItems(String subscriberId) {
+		return dao.getNewsItemsForUsername(subscriberId);
 	}
 	
 	public boolean addNewsItem(String title, String story, String reporterId) {

@@ -7,7 +7,7 @@
 <title>Error accessing NEW News</title>
 </head>
 <body>
- <p> An error occurred while processing your request: your session may have timed out. Try <a href="login.html"> logging in again</a>.</p> 
+ <p> An error occurred while processing your request: your session may have timed out. Try <a href="login.jsp"> logging in again</a>.</p> 
  <p>Thank you for your patience. </p>
 </body>
 </html>

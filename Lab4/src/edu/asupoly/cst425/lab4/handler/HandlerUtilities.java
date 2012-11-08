@@ -1,8 +1,11 @@
 package edu.asupoly.cst425.lab4.handler;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class HandlerUtilities {
+	
+	private static Logger logger = Logger.getLogger(HandlerUtilities.class.getName());
 	
 	/** Convenience method to make it easier to get a single parameter
 	 *  based on the params object passed into an implementation of a
@@ -18,6 +21,17 @@ public class HandlerUtilities {
 			return null;
 		}
 		return value[0];
+	}
+	
+	/** Authenticates that the username and password are valid
+	 * in this context that means they are the same value.
+	 * 
+	 * @param username 
+	 * @param password
+	 * @return whether they are valid (the same value)
+	 */
+	public static boolean validateUsernamePassword(String username, String password) {
+		return !username.equalsIgnoreCase(password);
 	}
 
 }

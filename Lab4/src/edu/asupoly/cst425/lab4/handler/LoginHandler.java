@@ -1,12 +1,17 @@
 package edu.asupoly.cst425.lab4.handler;
 
 import java.util.Map;
+import java.util.logging.Logger;
+
 import javax.servlet.http.HttpSession;
 import edu.asupoly.cst425.lab4.model.ReporterBean;
 import edu.asupoly.cst425.lab4.model.ReporterBeanFactory;
+import edu.asupoly.cst425.lab4.model.SubscriberBean;
+import edu.asupoly.cst425.lab4.model.SubscriberBeanFactory;
 
 public class LoginHandler implements ActionHandler
 {
+	private static Logger logger = Logger.getLogger(LoginHandler.class.getName());
 	@Override
 	public String handleAction(Map<String, String[]> params, HttpSession session) 
 	{				
@@ -14,24 +19,31 @@ public class LoginHandler implements ActionHandler
 		String passwd = null;
 		String errMsg = null;
 		ReporterBean reporterBean = null;
+		SubscriberBean subscriberBean = null;
 
-		reporterId = HandlerUtilities.getParameterValue("reporterid", params);
+		reporterId = HandlerUtilities.getParameterValue("userid", params);
 		passwd =  HandlerUtilities.getParameterValue("passwd", params);
-	
-		if (reporterId == null || reporterId.length() == 0 || passwd == null || passwd.length() == 0)
-			{	errMsg = "The reporterID or password cannot be empty";   }
-		else if ((reporterBean = ReporterBeanFactory.getReporter(reporterId, passwd)) == null)
-			{	errMsg = "The reporterID or password is not valid";   }
-	
-		// OK check and see if there is an error message
-		if (errMsg != null) 
-		{
+		String role = HandlerUtilities.getParameterValue("role", params);		
+			
+		if(reporterId == null || reporterId.length() == 0 
+				|| passwd == null || passwd.length() == 0) {
+			errMsg = "The reporterID or password cannot be empty";   
+		} else if(HandlerUtilities.validateUsernamePassword(reporterId, passwd)) {
+			errMsg = "The reporterID or password is not valid";
+		}
+		
+		if(errMsg != null) {
 			session.setAttribute("msg", errMsg);
+			return "index";
 		}
-		else 
-		{
-		   	session.setAttribute("reporterBean", reporterBean);
-		}
+		
+		if(role.equals("r")) {			
+			reporterBean = ReporterBeanFactory.getReporter(reporterId, passwd);					
+			session.setAttribute("reporterBean", reporterBean);
+		} else if(role.equals("s")) {			
+			subscriberBean = SubscriberBeanFactory.getSubscriber(reporterId, passwd);		
+		   	session.setAttribute("subscriberBean", subscriberBean);
+		}			
 		
 		return "index";
 	}

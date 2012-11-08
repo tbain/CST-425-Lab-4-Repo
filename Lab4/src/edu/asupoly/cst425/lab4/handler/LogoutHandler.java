@@ -11,7 +11,8 @@ public class LogoutHandler implements ActionHandler
 	{				
 		if (session != null)
 		{
-			session.setAttribute("reporterBean", null);
+			session.removeAttribute("reporterBean");
+			session.removeAttribute("subscriberBean");
 			return "index";
 		}
 		else

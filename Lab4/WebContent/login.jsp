@@ -8,9 +8,14 @@
 <title>Reporter Login to the Web News Application</title>
 <body>
 <form method="post" action="<%= request.getContextPath() %>/controller?action=login">
-Reporter ID: <input type="text" name="reporterid" size="25"/>
+User ID: <input type="text" name="userid" size="25"/>
 Password: <input type="password" name="passwd" size="25"/>
-<p></p>
+<br/>
+I am a...<br/>
+<input type="radio" name="role" value="r">Reporter<br/>
+<input type="radio" name="role" value="s">Subscriber<br/>
+<br/>
+<br/>
 <input type="submit" value="Login"/>
 </form>
 </body>

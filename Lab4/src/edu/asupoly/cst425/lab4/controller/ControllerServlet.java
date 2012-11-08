@@ -14,10 +14,13 @@ import javax.servlet.http.HttpSession;
 
 import edu.asupoly.cst425.lab4.dao.Lab4DAO;
 import edu.asupoly.cst425.lab4.handler.ActionHandler;
+import edu.asupoly.cst425.lab4.handler.AddFavoriteHandler;
 import edu.asupoly.cst425.lab4.handler.AddNewsHandler;
 import edu.asupoly.cst425.lab4.handler.LoginHandler;
 import edu.asupoly.cst425.lab4.handler.LogoutHandler;
 import edu.asupoly.cst425.lab4.handler.RemoveHandler;
+import edu.asupoly.cst425.lab4.handler.SeeAllHandler;
+import edu.asupoly.cst425.lab4.handler.SeeFavoritesHandler;
 import edu.asupoly.cst425.lab4.model.NewsItemBeanFactory;
 
 public class ControllerServlet extends HttpServlet 
@@ -45,6 +48,9 @@ public class ControllerServlet extends HttpServlet
     	handlers.put("logout", new LogoutHandler());
     	handlers.put("addNews", new AddNewsHandler());
     	handlers.put("remove", new RemoveHandler());
+    	handlers.put("addFavorite", new AddFavoriteHandler());
+    	handlers.put("seeAll", new SeeAllHandler());
+    	handlers.put("seeFavorites", new SeeFavoritesHandler());
     	pageViews.put("index", "/index.jsp");   
     	logger.info("in config");
     	final String dbURL = config.getInitParameter(INITPARAM_DB_URL);    	

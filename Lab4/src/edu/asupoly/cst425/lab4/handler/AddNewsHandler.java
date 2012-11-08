@@ -53,7 +53,7 @@ public class AddNewsHandler implements ActionHandler {
 		 }
 		 else
 		 {					
-			 return null;
+			 return "login";
 		 }
 	}
 
