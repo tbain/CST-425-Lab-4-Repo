@@ -18,10 +18,12 @@ import edu.asupoly.cst425.lab4.handler.AddFavoriteHandler;
 import edu.asupoly.cst425.lab4.handler.AddNewsHandler;
 import edu.asupoly.cst425.lab4.handler.LoginHandler;
 import edu.asupoly.cst425.lab4.handler.LogoutHandler;
-import edu.asupoly.cst425.lab4.handler.RemoveHandler;
+import edu.asupoly.cst425.lab4.handler.RemoveFavoritesHandler;
+import edu.asupoly.cst425.lab4.handler.RemoveNewsHandler;
 import edu.asupoly.cst425.lab4.handler.SeeAllHandler;
 import edu.asupoly.cst425.lab4.handler.SeeFavoritesHandler;
 import edu.asupoly.cst425.lab4.model.NewsItemBeanFactory;
+import edu.asupoly.cst425.lab4.model.SubscriberBeanFactory;
 
 public class ControllerServlet extends HttpServlet 
 {
@@ -35,6 +37,7 @@ public class ControllerServlet extends HttpServlet
     private Lab4DAO dao;
     public static final String DAO = "dao";
     public static final String NEWS_ITEM_FACTORY = "news_item_factory";
+    public static final String SUBSCRIBER_ITEM_FACTORY = "subscriber_item_factory";
     
     public void init(ServletConfig config) {
     	// normally I might read the action mapping from a config file
@@ -47,15 +50,17 @@ public class ControllerServlet extends HttpServlet
     	handlers.put("login", new LoginHandler());
     	handlers.put("logout", new LogoutHandler());
     	handlers.put("addNews", new AddNewsHandler());
-    	handlers.put("remove", new RemoveHandler());
+    	handlers.put("removeNews", new RemoveNewsHandler());
     	handlers.put("addFavorite", new AddFavoriteHandler());
     	handlers.put("seeAll", new SeeAllHandler());
     	handlers.put("seeFavorites", new SeeFavoritesHandler());
+    	handlers.put("removeFavorite", new RemoveFavoritesHandler());
     	pageViews.put("index", "/index.jsp");   
     	logger.info("in config");
     	final String dbURL = config.getInitParameter(INITPARAM_DB_URL);    	
     	Lab4DAO dao = new Lab4DAO(dbURL);
     	config.getServletContext().setAttribute(ControllerServlet.NEWS_ITEM_FACTORY, new NewsItemBeanFactory(dao));
+    	config.getServletContext().setAttribute(ControllerServlet.SUBSCRIBER_ITEM_FACTORY, new SubscriberBeanFactory(dao));
     	config.getServletContext().setAttribute(ControllerServlet.INITPARAM_DB_URL, dbURL);
     }
     

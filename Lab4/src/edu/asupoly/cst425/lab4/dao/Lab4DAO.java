@@ -17,7 +17,7 @@ public class Lab4DAO {
 	private final static Logger log = Logger.getLogger(Lab4DAO.class.getName());
 	
 	Connection conn;
-	//final String dbUrl = "jdbc:mysql://localhost:3306/cst425lab4";
+	final String dbUrl = "jdbc:mysql://localhost:3306/cst425lab4";
 	final String dbUser = "root";
 	final String dbPassword = "admin";
 	
@@ -46,15 +46,24 @@ public class Lab4DAO {
 		String story = newsItem.getItemStory();		
 		String reporterId = newsItem.getReporterId();		
 		String insertSQL = String.format(insertStatement, title, story, reporterId);
+		int result = 0;
 		
 		try {
 			Statement st = conn.createStatement();		
-			int result = st.executeUpdate(insertSQL);
+			result = st.executeUpdate(insertSQL);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}	
+		
+		if (result == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
 		}		
-		return true;		
 	}
 	
 	public boolean updateNewsItem(NewsItemBean newsItem) {
@@ -66,15 +75,24 @@ public class Lab4DAO {
 			
 		String updateSQL = String.format(updateStatement, title, story, id);
 		log.info("SQL Update statment: " + updateSQL);
+		int result = 0;
 		
 		try {	
 			Statement st = conn.createStatement();		
-			int result = st.executeUpdate(updateSQL);
+			result = st.executeUpdate(updateSQL);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		return true;		
+		}
+		
+		if (result == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 	public List<NewsItemBean> getNewsItemsForUsername(String username) {
@@ -120,14 +138,144 @@ public class Lab4DAO {
 	
 	public boolean removeNewsItem(int itemId) {
 		String deleteSQL = String.format("DELETE FROM newsitems WHERE id = %d;", itemId);
+		int result = 0;
+		
 		try {
 			Statement st = conn.createStatement();		
-			int result = st.executeUpdate(deleteSQL);
+			result = st.executeUpdate(deleteSQL);			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		
-		return true;
+		if (result == 0)
+		{
+			return false;
+		}
+		else
+		{
+			this.removeAllFavoritesForNewsID(itemId);
+			return true;
+		}
+	}
+
+	public List<NewsItemBean> getFavoritesForSubscribeID(String subscriberID) 
+	{	
+		List<NewsItemBean> results = new ArrayList<NewsItemBean>();
+				
+		String getSQL = String.format("SELECT item_id FROM favorites WHERE username = '%s'", subscriberID);
+		
+		try {
+			Statement st = conn.createStatement();		
+			ResultSet rs = st.executeQuery(getSQL);
+			while(rs.next()) 
+			{
+				int id = rs.getInt("item_id");
+				NewsItemBean newsItem = this.getNewsItemForId(id);				
+				results.add(newsItem);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		return results;		
+	}
+
+	public boolean overWriteAllFavoritesForSubscribeID(String subscriberID,
+			List<NewsItemBean> favorites) 
+	{
+		boolean result = removeFavoritesForSubscribeID(true, subscriberID, null);
+				
+		for (NewsItemBean index : favorites)
+		{
+			result = addFavoriteForSubscribeID(subscriberID, index);
+		}
+		
+		return result;
+	}
+
+	public boolean addFavoriteForSubscribeID(String subscriberID,
+			NewsItemBean newsItem) 
+	{		
+		String insertFavorite = String.format("INSERT INTO favorites (username, item_id) " +
+				"VALUES ('%s', '%d');", subscriberID, newsItem.getItemId());	
+		int result = 0;
+		
+		try {
+			Statement st = conn.createStatement();		
+			result = st.executeUpdate(insertFavorite);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		if (result == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}	
+	}
+
+	public boolean removeFavoritesForSubscribeID(boolean removeAllFavorites,
+			String subscriberID, NewsItemBean newsItem)
+	{
+		int result = 0;
+		
+		if (removeAllFavorites == false)
+		{
+			String deleteOneSQL = String.format("DELETE FROM favorites WHERE username = '%s' AND item_id = %d;", 
+					subscriberID, newsItem.getItemId());
+					
+			try {
+				Statement st = conn.createStatement();		
+				result = st.executeUpdate(deleteOneSQL);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		else if (newsItem == null)
+		{
+			String deleteAllSQL = String.format("DELETE FROM favorites WHERE username = '%s;'", subscriberID);
+			try {
+				Statement st = conn.createStatement();		
+				result = st.executeUpdate(deleteAllSQL);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}		
+		
+		if (result == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	
+	public boolean removeAllFavoritesForNewsID(int itemId) 
+	{
+		int result = 0;
+		String deleteAllSQL = String.format("DELETE FROM favorites WHERE item_id = %d;", itemId);
+		try {
+			Statement st = conn.createStatement();		
+			result = st.executeUpdate(deleteAllSQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (result == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 }

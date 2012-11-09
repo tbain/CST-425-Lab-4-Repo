@@ -24,11 +24,12 @@ if (rBean != null) {
  News about news that matters.
  <center>
  <a href='<%= response.encodeURL("about.jsp") %>'>About</a> 
- <a href='<%=response.encodeURL(request.getContextPath() +"/controller") +"?action=seeAll" %>'>View News</a> 
+ <a href='<%=response.encodeURL(request.getContextPath() +"/controller") +"?action=seeAll" %>'>View All News</a> 
 
 <%
 if (rBean != null) {
 %>
+ <a href='<%=response.encodeURL(request.getContextPath() +"/controller") +"?action=seeFavorites" %>'>View My News</a> 
  <a href='<%= response.encodeURL("addnews.jsp") %>'>Add News</a> 
  <a href='<%=response.encodeURL(request.getContextPath() +"/controller") +"?action=logout" %>'>Logout</a> 
 <%

@@ -7,7 +7,7 @@ import edu.asupoly.cst425.lab4.controller.ControllerServlet;
 import edu.asupoly.cst425.lab4.model.NewsItemBeanFactory;
 import edu.asupoly.cst425.lab4.model.ReporterBean;
 
-public class RemoveHandler implements ActionHandler
+public class RemoveNewsHandler implements ActionHandler
 {
 	@Override
 	public String handleAction(Map<String, String[]> params, HttpSession session) 

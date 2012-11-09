@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
-<project name="Lab4Given" default="targets" basedir=".">
+<project name="Lab4Part3" default="targets" basedir=".">
   <description>
-  This project constitutes the given Model 1 application for a fictional news feeder
+  This project constitutes Lab4 Part3 using the given Model 1 application for a fictional news feeder
+		By: Tyler Bain and Paul Spaude
   </description>
   <!-- set global properties for this build -->
-  <property name="tomcat.home" value="C:\tomcat\apache-tomcat-7.0.30-8080"/>
+  <property name="tomcat.home" value="C:\wrkspce\Tomcat\"/>
   <property name="src" value="./src" />
   <property name="lib" location="./lib" />
   <property name="res" value="./WebContent" />
   <property name="build" value="./build" />
   <property name="classes" value="./classes" />
-  <property name="appname" value="lab4given" />
+  <property name="appname" value="lab4part3" />
   <property name="war" value="${appname}.war" />
 
    <path id="compile.classpath">

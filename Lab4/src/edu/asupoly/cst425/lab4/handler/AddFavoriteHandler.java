@@ -1,5 +1,6 @@
 package edu.asupoly.cst425.lab4.handler;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import edu.asupoly.cst425.lab4.controller.ControllerServlet;
 import edu.asupoly.cst425.lab4.model.NewsItemBean;
 import edu.asupoly.cst425.lab4.model.NewsItemBeanFactory;
 import edu.asupoly.cst425.lab4.model.SubscriberBean;
+import edu.asupoly.cst425.lab4.model.SubscriberBeanFactory;
 
 public class AddFavoriteHandler implements ActionHandler {
 
@@ -25,9 +27,30 @@ public class AddFavoriteHandler implements ActionHandler {
 				return "error";
 			}
 			
-			NewsItemBeanFactory factory = (NewsItemBeanFactory) session.getServletContext().getAttribute(ControllerServlet.NEWS_ITEM_FACTORY);
-			NewsItemBean newsItem = factory.getNewsItem(itemId);
-			sBean.addFavorite(newsItem);			
+			NewsItemBeanFactory nFactory = (NewsItemBeanFactory) session.getServletContext().getAttribute(ControllerServlet.NEWS_ITEM_FACTORY);
+			SubscriberBeanFactory sFactory = (SubscriberBeanFactory) session.getServletContext().getAttribute(ControllerServlet.SUBSCRIBER_ITEM_FACTORY);
+			NewsItemBean newsItem = nFactory.getNewsItem(itemId);
+			
+			List<NewsItemBean> subscribersFavorites = sFactory.getFavorites(sBean.getSubscriberId());
+			boolean result = true;
+						
+			for (NewsItemBean index : subscribersFavorites)
+			{
+				if (index.getItemId() == newsItem.getItemId())
+				{
+					result = false;
+				}
+			}
+			
+			if (result == true)
+			{
+				sFactory.addFavorite(sBean.getSubscriberId(), newsItem);
+			}
+			else
+			{
+				 String msg = "That favorite is already in your favorites!";
+				 session.setAttribute("msg", msg);
+			}
 		}
 		
 		return "index";
