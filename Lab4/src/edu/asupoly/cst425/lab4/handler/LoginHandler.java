@@ -18,19 +18,15 @@ public class LoginHandler implements ActionHandler
 		String reporterId = null;
 		String passwd = null;
 		String errMsg = null;
+		String role = null;
 		ReporterBean reporterBean = null;
 		SubscriberBean subscriberBean = null;
 
 		reporterId = HandlerUtilities.getParameterValue("userid", params);
 		passwd =  HandlerUtilities.getParameterValue("passwd", params);
-		String role = HandlerUtilities.getParameterValue("role", params);		
+		role = HandlerUtilities.getParameterValue("role", params);		
 			
-		if(reporterId == null || reporterId.length() == 0 
-				|| passwd == null || passwd.length() == 0) {
-			errMsg = "The reporterID or password cannot be empty";   
-		} else if(HandlerUtilities.validateUsernamePassword(reporterId, passwd)) {
-			errMsg = "The reporterID or password is not valid";
-		}
+		errMsg = validateLoginPage(reporterId, passwd, role);
 		
 		if(errMsg != null) {
 			session.setAttribute("msg", errMsg);
@@ -46,5 +42,19 @@ public class LoginHandler implements ActionHandler
 		}			
 		
 		return "index";
+	}
+	
+	private String validateLoginPage(String reporterId, String passwd, String role) {
+		String errMsg = null;
+		
+		if(reporterId == null || reporterId.length() == 0 
+				|| passwd == null || passwd.length() == 0) {
+			errMsg = "The reporterID or password cannot be empty.";   
+		} else if(HandlerUtilities.validateUsernamePassword(reporterId, passwd)) {
+			errMsg = "The reporterID or password is not valid.";
+		} else if(role == null) {
+			errMsg = "The role solection was not valid.";
+		}
+		return errMsg;
 	}
 }

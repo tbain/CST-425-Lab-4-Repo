@@ -46,6 +46,8 @@ public final class NewsItemBeanFactory {
 	
 	public boolean editNewsItem(int itemId, String title, String story, String reporterId) {
 		NewsItemBean newsItem = getNewsItem(itemId, reporterId);
+		newsItem.setItemTitle(title, reporterId);
+		newsItem.setItemStory(story, reporterId);
 		return dao.updateNewsItem(newsItem);
 	}
 	
